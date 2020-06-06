@@ -1,9 +1,10 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
-import { environment } from '../../environments/environment';
-import { Observable, throwError } from 'rxjs';
+import { environment } from '@env/environment';
+import { Observable, throwError, ObservedValueOf } from 'rxjs';
 import { map, catchError, retry } from 'rxjs/operators';
-import { SimpleEvent } from '../models/simpleevent';
+import { SimpleEvent } from '@app/models/simple-event';
+import { DetailedEvent } from '@app/models/detailed-event';
 
 @Injectable({
   providedIn: 'root'
@@ -11,7 +12,7 @@ import { SimpleEvent } from '../models/simpleevent';
 export class FrcService {
   constructor(private httpClient: HttpClient) { }
 
-  getEvents(year: number) {
+  getEventsSimplified(year: number): Observable<SimpleEvent[]> {
     const httpOptions = {
           headers: new HttpHeaders({
               'X-TBA-Auth-Key': environment.frcToken
@@ -20,5 +21,16 @@ export class FrcService {
 
     return this.httpClient
         .get<SimpleEvent[]>(`${environment.frcBaseUrl}/api/v3/events/${year}/simple`, httpOptions);
+  }
+
+  getEventsDetailed(year: number): Observable<DetailedEvent[]> {
+    const httpOptions = {
+      headers: new HttpHeaders({
+          'X-TBA-Auth-Key': environment.frcToken
+      })
+    };
+
+    return this.httpClient
+      .get<DetailedEvent[]>(`${environment.frcBaseUrl}/api/v3/events/${year}`, httpOptions);
   }
 }

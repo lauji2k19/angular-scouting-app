@@ -7,12 +7,12 @@ import { AppComponent } from './app.component';
 import { TableModule } from 'primeng/table';
 import { MenubarModule } from 'primeng/menubar';
 import { AppRoutingModule } from './app-routing.module';
-import { HomeComponent } from './home/home.component';
-import { SimpleEventsComponent } from './simple-events/simple-events.component';
+import { HomeComponent } from './pages/home/home.component';
+import { SimpleEventsComponent } from './pages/home/events/simple-events/simple-events.component';
 import { MDBBootstrapModule, NavbarModule, WavesModule, ButtonsModule } from 'angular-bootstrap-md';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { EventsComponent } from './events/events.component';
-import { DetailedEventsComponent } from './detailed-events/detailed-events.component';
+import { EventsComponent } from './pages/home/events/events.component';
+import { DetailedEventsComponent } from './pages/home/events/detailed-events/detailed-events.component';
 
 @NgModule({
   declarations: [

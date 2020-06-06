@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
-import { SimpleEvent } from '../models/simpleevent';
-import { FrcService } from '../services/frc.service';
+import { SimpleEvent } from '@app/models/simple-event';
+import { FrcService } from '@app/services/frc.service';
 import { MenuItem } from 'primeng/api';
 
 @Component({
@@ -19,7 +19,6 @@ export class SimpleEventsComponent implements OnInit {
     this.cols = [
       { field: 'city', header: 'City' },
       { field: 'country', header: 'Country' },
-      { field: 'district', header: 'District' },
       { field: 'end_date', header: 'End Date' },
       { field: 'event_code', header: 'Event Code' },
       { field: 'event_type', header: 'Event Type' },
@@ -30,7 +29,7 @@ export class SimpleEventsComponent implements OnInit {
       { field: 'year', header: 'Year' }
     ]
 
-    this.frc_service.getEvents(2019).subscribe(data => this.simple_events = data);
+    this.frc_service.getEventsSimplified(2019).subscribe(data => this.simple_events = data);
 
   }
 }

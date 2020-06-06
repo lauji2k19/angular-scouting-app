@@ -1,9 +1,9 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
-import { HomeComponent } from './home/home.component';
-import { EventsComponent } from './events/events.component';
-import { SimpleEventsComponent } from './simple-events/simple-events.component';
-import { DetailedEventsComponent } from './detailed-events/detailed-events.component';
+import { HomeComponent } from './pages/home/home.component';
+import { EventsComponent } from './pages/home/events/events.component';
+import { SimpleEventsComponent } from './pages/home/events/simple-events/simple-events.component';
+import { DetailedEventsComponent } from './pages/home/events/detailed-events/detailed-events.component';
 
 const routes: Routes = [
   { path: '', component: HomeComponent },
