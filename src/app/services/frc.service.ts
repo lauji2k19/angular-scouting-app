@@ -9,14 +9,12 @@ import { SimpleEvent } from '../models/simpleevent';
   providedIn: 'root'
 })
 export class FrcService {
-  token: string = 'mAIR8eonporiBs1a0JmN99euhItJEy1DiNEwZfljSTPUXiNfJxmySt7OAMLXj319';
-
   constructor(private httpClient: HttpClient) { }
 
-  getEvents(year: number) {    
+  getEvents(year: number) {
     const httpOptions = {
           headers: new HttpHeaders({
-              'X-TBA-Auth-Key': this.token
+              'X-TBA-Auth-Key': environment.frcToken
           })
       };
 
