@@ -8,15 +8,19 @@ import { TableModule } from 'primeng/table';
 import { MenubarModule } from 'primeng/menubar';
 import { AppRoutingModule } from './app-routing.module';
 import { HomeComponent } from './home/home.component';
-import { EventsComponent } from './events/events.component';
+import { SimpleEventsComponent } from './simple-events/simple-events.component';
 import { MDBBootstrapModule, NavbarModule, WavesModule, ButtonsModule } from 'angular-bootstrap-md';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { EventsComponent } from './events/events.component';
+import { DetailedEventsComponent } from './detailed-events/detailed-events.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     HomeComponent,
-    EventsComponent
+    SimpleEventsComponent,
+    EventsComponent,
+    DetailedEventsComponent,
   ],
   imports: [
     BrowserModule,
