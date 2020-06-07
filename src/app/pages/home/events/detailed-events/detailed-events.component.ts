@@ -39,7 +39,7 @@ export class DetailedEventsComponent implements OnInit {
       { field: 'year', header: 'Year' }
     ]
 
-    this.frc_service.getEventsDetailed(2019).subscribe(data => this.detailed_events = data);
-
+    this.frc_service.getEventsDetailed(2019)
+      .subscribe(data => this.detailed_events = data);
   }
 }
