@@ -1,13 +1,8 @@
-<!--Navbar-->
-<mdb-navbar SideClass="navbar navbar-expand-lg navbar-dark indigo">
+<mdb-navbar SideClass="navbar navbar-expand-lg navbar-dark indigo" [containerInside]="false">
 
-  <!-- Navbar brand -->
   <mdb-navbar-brand><a class="navbar-brand" href="#">Angular Scouting App</a></mdb-navbar-brand>
 
-  <!-- Collapsible content -->
   <links>
-
-      <!-- Links -->
       <ul class="navbar-nav mr-auto">
           <li class="nav-item" [routerLinkActive]="['active']">
               <a class="nav-link waves-light" [routerLink]="['home']" mdbWavesEffect>Home<span class="sr-only">(current)</span></a>
@@ -21,7 +16,20 @@
             </div>
         </li>
       </ul>
-      <!-- Links -->
+
+      <ul class="navbar-nav ml-auto">
+        <li class="nav-item">
+          <a class="nav-link waves-light" mdbWavesEffect *ngIf="!loggedIn" (click)="signInWithGoogle()">Sign in</a>
+        </li>
+        <li class="nav-item dropdown" dropdown *ngIf="loggedIn">
+          <a dropdownToggle mdbWavesEffect type="button" class="nav-link dropdown-toggle waves-light" mdbWavesEffect>
+            <mdb-icon fas icon="user"></mdb-icon> Signed in as {{user?.name}} <span class="caret"></span></a>
+          <div *dropdownMenu class="dropdown-menu dropdown-menu-right dropdown dropdown-primary" role="menu">
+            <a class="dropdown-item waves-light" mdbWavesEffect>My account</a>
+            <a class="dropdown-item waves-light" mdbWavesEffect (click)="signOutFromGoogle()" [routerLink]="['home']">Log out</a>
+          </div>
+        </li>
+      </ul>
   </links>
 </mdb-navbar>
 

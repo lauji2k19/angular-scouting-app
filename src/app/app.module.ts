@@ -6,7 +6,8 @@ import { FormsModule } from '@angular/forms';
 import { NgxsModule } from '@ngxs/store';
 import { LoadingState } from '@app/state/loading.state';
 import { NgxsReduxDevtoolsPluginModule } from '@ngxs/devtools-plugin';
-import { NgxsLoggerPluginModule } from '@ngxs/logger-plugin';
+// import { NgxsLoggerPluginModule } from '@ngxs/logger-plugin';
+import { NgxUiLoaderModule } from 'ngx-ui-loader';
 
 import { AppComponent } from './app.component';
 
@@ -22,8 +23,21 @@ import { MDBBootstrapModule, NavbarModule, WavesModule, ButtonsModule } from 'an
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { EventsComponent } from './pages/home/events/events.component';
 import { DetailedEventsComponent } from './pages/home/events/detailed-events/detailed-events.component';
-import { LoadingScreenComponent } from './components/loading-screen/loading-screen.component';
 import { environment } from '@env/environment';
+import { SimpleEventsState } from './state/simple-events.state';
+
+import { SocialLoginModule, AuthServiceConfig, GoogleLoginProvider } from 'angularx-social-login';
+
+let config = new AuthServiceConfig([
+  {
+    id: GoogleLoginProvider.PROVIDER_ID,
+    provider: new GoogleLoginProvider(environment.googleOAuthClientId)
+  }
+]);
+
+export function provideConfig() {
+  return config;
+}
 
 @NgModule({
   declarations: [
@@ -31,8 +45,7 @@ import { environment } from '@env/environment';
     HomeComponent,
     SimpleEventsComponent,
     EventsComponent,
-    DetailedEventsComponent,
-    LoadingScreenComponent,
+    DetailedEventsComponent
   ],
   imports: [
     BrowserModule,
@@ -50,15 +63,23 @@ import { environment } from '@env/environment';
     ButtonModule,
     NgxsModule.forRoot(
     [
-      LoadingState
+      LoadingState,
+      SimpleEventsState
     ],
     {
       developmentMode: !environment.production
     }),
     NgxsReduxDevtoolsPluginModule.forRoot(),
-    NgxsLoggerPluginModule.forRoot()
+    // NgxsLoggerPluginModule.forRoot(),
+    NgxUiLoaderModule,
+    SocialLoginModule
   ],
-  providers: [],
+  providers: [
+    {
+      provide: AuthServiceConfig,
+      useFactory: provideConfig
+    }
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

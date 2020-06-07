@@ -20,7 +20,7 @@ export class FrcService {
   };
   }
 
-  getAllEventsSimplified(): Observable<SimpleEvent[]> {
+  getEventsSimplified(): Observable<SimpleEvent[]> {
     let startYear: number = 2020;
     let test = [];
     return this.httpClient
@@ -38,12 +38,12 @@ export class FrcService {
         );
   }
 
-  getEventsSimplified(year: number): Observable<SimpleEvent[]> {
+  getEventSimplified(year: number): Observable<SimpleEvent[]> {
     return this.httpClient
         .get<SimpleEvent[]>(`${environment.frcBaseUrl}/api/v3/events/${year}/simple`, this.httpOptions)
   }
 
-  getEventsDetailed(year: number): Observable<DetailedEvent[]> {
+  getEventDetailed(year: number): Observable<DetailedEvent[]> {
     return this.httpClient
       .get<DetailedEvent[]>(`${environment.frcBaseUrl}/api/v3/events/${year}`, this.httpOptions);
   }

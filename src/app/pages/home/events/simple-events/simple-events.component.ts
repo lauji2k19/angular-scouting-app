@@ -1,11 +1,13 @@
 import { Component, OnInit } from '@angular/core';
 import { SimpleEvent } from '@app/models/simple-event';
+import { SimpleEventsState } from '@app/state/simple-events.state';
+import { LoadingState } from '@app/state/loading.state';
 import { FrcService } from '@app/services/frc.service';
 import { MenuItem } from 'primeng/api';
+import { NgxUiLoaderService } from 'ngx-ui-loader';
 import { Store, Select } from '@ngxs/store';
 import { Observable } from 'rxjs';
-import { StartLoading, StopLoading } from '@app/actions/loading.actions';
-import { LoadingState } from '@app/state/loading.state';
+import { AddEventData } from '@app/actions/simple-events.actions';
 
 @Component({
   selector: 'app-home',
@@ -14,13 +16,13 @@ import { LoadingState } from '@app/state/loading.state';
 })
 export class SimpleEventsComponent implements OnInit {
   cols: any[];
-  simple_events: SimpleEvent[];
+  @Select(SimpleEventsState.getEvents) stored_events: Observable<SimpleEvent[]>;
+  displayed_events: SimpleEvent[];
   menu_items: MenuItem[];
-  yearInput: string;
+  searchInput: string;
   searchError: string;
-  @Select(LoadingState.getLoadingState) loading: Observable<boolean>;
 
-  constructor(private frc_service: FrcService, private store: Store) {}
+  constructor(private frc_service: FrcService, private store: Store, private NgxUiLoaderService: NgxUiLoaderService) {}
 
   ngOnInit() {
     this.cols = [
@@ -35,37 +37,27 @@ export class SimpleEventsComponent implements OnInit {
       { field: 'state_prov', header: 'State Province' },
       { field: 'year', header: 'Year' }
     ];
-    this.simple_events = [];
+
+    this.stored_events.subscribe(data => {
+      if (data.length == 0) {
+        this.NgxUiLoaderService.start();
+        this.frc_service.getEventsSimplified()
+          .subscribe(
+            data => this.store.dispatch(new AddEventData(data)),
+            error => console.log(error.error),
+            () => this.NgxUiLoaderService.stop()
+          );
+      }
+    });
   }
 
   filterByValue(array, string) {
     return array.filter(o => Object.keys(o).some(k => o[k]?.toString()?.toLowerCase()?.includes(string.toLowerCase())));
   }
 
-  searchForAllEvents(event) {
-    this.store.dispatch(new StartLoading());
-    this.frc_service.getAllEventsSimplified()
-      .subscribe(
-        data => this.simple_events = this.simple_events.concat(data),
-        error => console.log(error.error),
-        () => this.store.dispatch(new StopLoading())
-      );
-  }
-
   searchForEvents() {
-    // this.frc_service.getEventsSimplified(2020).subscribe(
-    //   data => {
-    //   },
-    //   error => {
-    //     if (error.status == 404) {
-    //       const message: string = error.error["Errors"].find(obj => obj["year"] != null)["year"];
-    //       this.searchError = message != null ? message : "An unknown 404 error occurred.";
-    //     }
-    //     else {
-    //       this.searchError = "An unknown error occured. Check the console.";
-    //     }
-    //   },
-    //   () => this.searchError = ''
-    //   );
+    this.stored_events.subscribe(data => {
+      this.displayed_events = this.filterByValue(data, this.searchInput);
+    })
   }
 }

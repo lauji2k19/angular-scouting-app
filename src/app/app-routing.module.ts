@@ -4,6 +4,7 @@ import { HomeComponent } from './pages/home/home.component';
 import { EventsComponent } from './pages/home/events/events.component';
 import { SimpleEventsComponent } from './pages/home/events/simple-events/simple-events.component';
 import { DetailedEventsComponent } from './pages/home/events/detailed-events/detailed-events.component';
+import { LoginGuard } from './login_guard';
 
 const routes: Routes = [
   { path: '', component: HomeComponent },
@@ -12,8 +13,8 @@ const routes: Routes = [
     path: 'events',
     component: EventsComponent,
     children: [
-      { path: 'simple', component: SimpleEventsComponent },
-      { path: 'detailed', component: DetailedEventsComponent }
+      { path: 'simple', component: SimpleEventsComponent, canActivate: [LoginGuard] },
+      { path: 'detailed', component: DetailedEventsComponent, canActivate: [LoginGuard] }
     ]
   }
 ];

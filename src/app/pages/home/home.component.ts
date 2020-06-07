@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { AuthService, SocialUser, GoogleLoginProvider } from 'angularx-social-login';
 
 @Component({
   selector: 'app-events',
@@ -6,10 +7,9 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./home.component.css']
 })
 export class HomeComponent implements OnInit {
+  constructor(private authService: AuthService) { }
 
-  constructor() { }
+  ngOnInit() {
 
-  ngOnInit(): void {
   }
-
 }

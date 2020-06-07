@@ -1,15 +1,13 @@
-<loading-screen *ngIf="loading|async"></loading-screen>
+<ngx-ui-loader></ngx-ui-loader>
 
 <span style="margin-left: 1vw; margin-top: 1vh; margin-bottom: 1vh;" class="ui-float-label">
-  <input id="float-input" type="text" size="30" pInputText [(ngModel)]="yearInput" (keydown.enter)="searchForEvents()">
+  <input id="float-input" type="text" size="30" pInputText [(ngModel)]="searchInput" (keydown.enter)="searchForEvents()">
   <label for="float-input">Year</label>
   <p style="display: inline; margin-left: 1vw; color: red">{{searchError}}</p>
 </span>
 
-<p-button label="Click" (onClick)="searchForAllEvents($event)"></p-button>
-
 <div>
-  <p-table [columns]="cols" [value]="simple_events" selectionMode="single" [paginator]="true" [rows]="20" [showCurrentPageReport]="true"
+  <p-table [columns]="cols" [value]="displayed_events" selectionMode="single" [paginator]="true" [rows]="20" [showCurrentPageReport]="true"
     currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries">
     <ng-template pTemplate="header" let-columns>
         <tr>
